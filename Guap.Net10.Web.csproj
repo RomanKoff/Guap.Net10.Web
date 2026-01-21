@@ -24,4 +24,9 @@
 		<PackageReference Include="NLog.Web.AspNetCore" Version="6.1.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Ans.Net10.Common\Ans.Net10.Common.csproj" />
+	  <ProjectReference Include="..\Ans.Net10.Web\Ans.Net10.Web.csproj" />
+	</ItemGroup>
+
 </Project>

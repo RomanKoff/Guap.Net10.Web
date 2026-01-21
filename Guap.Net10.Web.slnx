@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="../Ans.Net10.Common/Ans.Net10.Common.csproj" />
+  <Project Path="../Ans.Net10.Web/Ans.Net10.Web.csproj" />
   <Project Path="Guap.Net10.Web.csproj" />
 </Solution>
