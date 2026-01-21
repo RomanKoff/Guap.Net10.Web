@@ -1,0 +1,40 @@
+﻿using Ans.Net10.Common;
+using Guap.Net10.Web.Models;
+using Guap.Net10.Web.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Guap.Net10.Web
+{
+
+	public static partial class _e
+	{
+
+		/* functions */
+
+
+		public static GuapUserModel[] GetGuapUsers(
+			this HttpContext context)
+		{
+			if (!context.User.Identity.IsAuthenticated)
+				return null;
+			var provider1 = context.RequestServices
+				.GetService<IGuapUsersProvider>();
+			return provider1.GetUsers();
+		}
+
+
+		public static RegistryList GetGuapUsersRegistry(
+			this HttpContext context)
+		{
+			var reg1 = new RegistryList(
+				context.GetGuapUsers().Select(
+					x => new RegistryItem(
+						x.NameIdentifier, x.DisplayedName, 0, false)));
+			reg1.AddNullItem();
+			return reg1;
+		}
+
+	}
+
+}
