@@ -1,0 +1,128 @@
+﻿@*
+Компонент библиотеки Guap.Net10.Web.
+Код не предназначен для редактирования и компиляции во время выполнения!
+*@
+@{
+    Current.Site.Title = Current.Configuration.GetLibGuapOptions().AppTitle;
+
+    var ver1 = 2;
+}
+<!DOCTYPE html>
+<html lang="@Current.Culture" class="h-100">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    @Current.Meta.Render()
+    <title>@Current.BrowserTitle()</title>
+    <link href="https://src.guap.ru/themes/app3/dist/theme.min.css?@ver1" rel="stylesheet" />
+    @await RenderSectionAsync("HeadSection", false)
+</head>
+
+<body class="d-flex flex-column h-100">
+    <span id="totop" onclick="moveToTop();"><i class="bi-chevron-up"></i></span>
+
+    <header id="guap_header" class="py-1 bg-light">
+        <site-container>
+            <div class="d-flex align-items-center gap-2 lh-sm text-break">
+                <a target="_blank" href="https://guap.ru/"><img style="max-height:1.4rem;" src="https://src.guap.ru/logos/guap/guap.svg" /></a>
+                @if (Current.Configuration.GetLibGuapOptions().Sso != null)
+                {
+                    <ul class="nav ms-auto" style="--bs-nav-link-padding-x:.2rem;--bs-nav-link-padding-y:.2rem;">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item"><a class="nav-link icon-link" href="@Url.Content("~/guap/sso/profile")"><i class="bi-person-square"></i>@User.GetNameFromClaim().ToHtml()</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link icon-link" href="@Url.Content("~/guap/sso/profile")"><i class="bi-person-circle"></i>Войти</a></li>
+                        }
+                    </ul>
+                }
+            </div>
+        </site-container>
+    </header>
+
+
+    <header id="site_header" class="py-3 bg-primary text-white">
+        <site-container>
+            <div class="text-break lh-sm">
+                <a class="text-white text-decoration-none" href="~/"><h1 class="site-title m-0">@Current.Site.TitleHtml</h1></a>
+                @ViewData.GetString("SiteSummary")?.ToHtml("<p class=\"site-summary opacity-75 m-0 pt-2\">{0}</p>", true)
+            </div>
+        </site-container>
+    </header>
+
+
+    <main role="main">
+        <page-container>
+            <partial name="/Areas/Guap/Helpers/Breadcrumbs.cshtml" />
+            <partial name="/Areas/Guap/Helpers/PageTitle.cshtml" />
+            <partial name="/Areas/Guap/Helpers/PageSlaves.cshtml" />
+        </page-container>
+        <page-container class="mb-5">
+            @RenderBody()
+        </page-container>
+    </main>
+
+
+    <div class="mt-auto">
+        <footer id="site_footer" class="py-2 bg-dark text-light">
+            <site-container>
+                <div class="d-flex align-items-center gap-3 lh-sm small">
+                    <div>
+                        <div class="text-break fw-medium">@Current.Site.TitleHtml</div>
+                        <div class="fs-9 fw-light opacity-50">
+                            @LibGuapInfo.GetName() ver. @LibGuapInfo.GetVersion().
+                            <nobr>IP: @Current.Network.RemoteIpAddress</nobr>
+                        </div>
+                    </div>
+                    <a target="_blank" href="https://guap.ru/it" class="ms-auto link-light icon-link"><img style="max-height:1.5rem;" src="https://src.guap.ru/logos/it/logo_w.svg" alt="УЦР ГУАП" />Сервисы УЦР&nbsp;ГУАП</a>
+                </div>
+            </site-container>
+        </footer>
+    </div>
+
+
+    <script defer src="https://src.guap.ru/themes/app3/dist/theme.min.js?@ver1"></script>
+
+    <link href="https://src.guap.ru/libs/ckeditor5/47.2.0/dist/plug.min.css" rel="stylesheet" />
+
+    <script type="module">
+
+        import Ckeditor_Ru
+            from 'https://src.guap.ru/libs/ckeditor5/47.2.0/ckeditor5/translations/ru.js';
+
+        import {
+            Ckeditor_MakeArticle
+        }
+            from 'https://src.guap.ru/libs/ckeditor5/47.2.0/dist/plug.min.js';
+
+        import {
+            TYPOGRAF_FOR_STRING,
+            TYPOGRAF_FOR_ARTICLE,
+        }
+            from 'https://src.guap.ru/libs/typograf/7.6.0/dist/plug.min.js';
+
+        const
+            CKEDITORS1 = Ckeditor_MakeArticle('.html-article'),
+            TYPOGRAF_STRING1 = [...document.querySelectorAll('.typograf-string')];
+
+        [...document.getElementsByTagName('form')].forEach((f1) => {
+            f1.addEventListener("submit", () => {
+                CKEDITORS1.forEach((e1) => {
+                    e1.setData(TYPOGRAF_FOR_ARTICLE.execute(e1.getData()));
+                });
+                TYPOGRAF_STRING1.forEach((e1) => {
+                    e1.value = TYPOGRAF_FOR_STRING.execute(e1.value);
+                });
+            });
+        });
+
+
+
+    </script>
+
+    @await RenderSectionAsync("Scripts", false)
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿@*
+Компонент библиотеки Guap.Net10.Web.
+Код не предназначен для редактирования и компиляции во время выполнения!
+*@
+@page
+@using System.Security.Claims
+@model Guap.Net10.Web.Areas.Guap.Pages.SSO.AccessDeniedModel
+@{
+    Current.Page.Title = "Доступ закрыт";
+
+    var claims1 = User.Claims.OrderBy(x => x.Type).AsEnumerable();
+}
+<p>
+    Для получения доступа сообщите администратору следующую информацию:
+</p>
+<table class="table table-bordered w-auto">
+    <tr>
+        <td>Идентификатор пользователя:</td>
+        <td><code class="lead user-select-all">@User.GetNameIdentifierFromClaim()</code></td>
+    </tr>
+    <tr>
+        <td>Имя пользователя:</td>
+        <td><code class="user-select-all">@User.Identity.Name (@User.GetNameFromClaim().ToHtml())</code></td>
+    </tr>
+    <tr>
+        <td>Приложение:</td>
+        <td><code class="user-select-all">@Current.Configuration.GetLibGuapOptions().AppName</code></td>
+    </tr>
+    <tr>
+        <td>IP-адрес:</td>
+        <td><code class="user-select-all">@Current.Network.RemoteIpAddress</code></td>
+    </tr>
+</table>
+
+<div class="my-5 text-center">
+    <img class="img-fluid" style="max-height:25rem;" src="@Current.Options.Errors?.Picture403" alt="" />
+</div>
+
+<partial name="_UserInfo.cshtml" />
