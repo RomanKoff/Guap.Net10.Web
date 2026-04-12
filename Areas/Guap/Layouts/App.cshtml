@@ -22,6 +22,7 @@
 <body class="d-flex flex-column h-100">
     <span id="totop" onclick="moveToTop();"><i class="bi-chevron-up"></i></span>
 
+
     <header id="guap_header" class="py-1 bg-light">
         <site-container>
             <div class="d-flex align-items-center gap-2 lh-sm text-break">
@@ -54,6 +55,16 @@
     </header>
 
 
+    @if (Current.Node.HasPages)
+    {
+        <div id="node_navigator" class="bg-white border-bottom border-light pt-2">
+            <node-container>
+                <partial name="/Areas/Ans/Helpers/NodeNav_Simple.cshtml" />
+            </node-container>
+        </div>
+    }
+
+
     <main role="main">
         <page-container>
             <partial name="/Areas/Guap/Helpers/Breadcrumbs.cshtml" />
@@ -62,6 +73,9 @@
         </page-container>
         <page-container class="mb-5">
             @RenderBody()
+            <environment names="Development">
+                <partial name="/Areas/Ans/Helpers/DebugCurrent.cshtml" />
+            </environment>
         </page-container>
     </main>
 
@@ -91,32 +105,32 @@
     <script type="module">
 
         import Ckeditor_Ru
-            from 'https://src.guap.ru/libs/ckeditor5/47.2.0/ckeditor5/translations/ru.js';
+        from 'https://src.guap.ru/libs/ckeditor5/47.2.0/ckeditor5/translations/ru.js';
 
         import {
-            Ckeditor_MakeArticle
+        Ckeditor_MakeArticle
         }
-            from 'https://src.guap.ru/libs/ckeditor5/47.2.0/dist/plug.min.js';
+        from 'https://src.guap.ru/libs/ckeditor5/47.2.0/dist/plug.min.js';
 
         import {
-            TYPOGRAF_FOR_STRING,
-            TYPOGRAF_FOR_ARTICLE,
+        TYPOGRAF_FOR_STRING,
+        TYPOGRAF_FOR_ARTICLE,
         }
-            from 'https://src.guap.ru/libs/typograf/7.6.0/dist/plug.min.js';
+        from 'https://src.guap.ru/libs/typograf/7.6.0/dist/plug.min.js';
 
         const
-            CKEDITORS1 = Ckeditor_MakeArticle('.html-article'),
-            TYPOGRAF_STRING1 = [...document.querySelectorAll('.typograf-string')];
+        CKEDITORS1 = Ckeditor_MakeArticle('.html-article'),
+        TYPOGRAF_STRING1 = [...document.querySelectorAll('.typograf-string')];
 
         [...document.getElementsByTagName('form')].forEach((f1) => {
-            f1.addEventListener("submit", () => {
-                CKEDITORS1.forEach((e1) => {
-                    e1.setData(TYPOGRAF_FOR_ARTICLE.execute(e1.getData()));
-                });
-                TYPOGRAF_STRING1.forEach((e1) => {
-                    e1.value = TYPOGRAF_FOR_STRING.execute(e1.value);
-                });
-            });
+        f1.addEventListener("submit", () => {
+        CKEDITORS1.forEach((e1) => {
+        e1.setData(TYPOGRAF_FOR_ARTICLE.execute(e1.getData()));
+        });
+        TYPOGRAF_STRING1.forEach((e1) => {
+        e1.value = TYPOGRAF_FOR_STRING.execute(e1.value);
+        });
+        });
         });
 
 
