@@ -69,13 +69,14 @@
         <page-container>
             <partial name="/Areas/Guap/Helpers/Breadcrumbs.cshtml" />
             <partial name="/Areas/Guap/Helpers/PageTitle.cshtml" />
-            <partial name="/Areas/Guap/Helpers/PageSlaves.cshtml" />
+            <partial name="/Areas/Ans/Helpers/PageSlaves.cshtml" />
         </page-container>
         <page-container class="mb-5">
+
             @RenderBody()
             <environment names="Development">
                 <partial name="/Areas/Ans/Helpers/DebugCurrent.cshtml" />
-            </environment>
+            </environment>            
         </page-container>
     </main>
 

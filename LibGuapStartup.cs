@@ -133,11 +133,13 @@ namespace Guap.Net10.Web
 			LibGuapOptions options)
 		{
 			if (options.Users != null)
-				builder.Services.AddSingleton
-					<IGuapUsersProvider, GuapUsersProvider_AppSettings>();
+			{
+				builder.Services.AddSingleton<IGuapUsersProvider, GuapUsersProvider_AppSettings>();
+			}
 			else if (options.AuthApi != null)
-				builder.Services.AddSingleton
-					<IGuapUsersProvider, GuapUsersProvider_AuthApi>();
+			{
+				builder.Services.AddSingleton<IGuapUsersProvider, GuapUsersProvider_AuthApi>();
+			}
 
 			builder.Services.AddSingleton<IClaimsTransformation, GuapClaimsTransformation>();
 			builder.Services.AddSingleton<IUsersService, GuapUsersService>();
@@ -147,6 +149,7 @@ namespace Guap.Net10.Web
 				o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 				o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 			});
+
 			auth1.AddCookie(o =>
 			{
 				if (options.Sso.CookieName != null)
@@ -156,6 +159,7 @@ namespace Guap.Net10.Web
 				o.SlidingExpiration = true;
 				o.AccessDeniedPath = new PathString("/Guap/SSO/AccessDenied");
 			});
+			
 			auth1.AddOpenIdConnect(o =>
 			{
 				o.RequireHttpsMetadata = options.Sso.RequireHttpsMetadata;
