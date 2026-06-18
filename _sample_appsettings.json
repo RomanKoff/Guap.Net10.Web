@@ -1,0 +1,10 @@
+{
+
+	"Guap.Net10.Web": {
+
+		"AppName": "", // Required!
+		"AppTitle": "" // Required!
+
+	}
+
+}

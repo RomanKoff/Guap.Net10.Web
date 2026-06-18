@@ -1,5 +1,4 @@
 ﻿using Ans.Net10.Web;
-using Guap.Net10.Web.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace Guap.Net10.Web
@@ -28,42 +27,8 @@ namespace Guap.Net10.Web
 				throw GetExceptionParamRequired(nameof(AppTitle));
 		}
 
-		public string AppName { get; set; }
-		public string AppTitle { get; set; }
-		public SsoOptions Sso { get; set; }
-		public AppUsers[] Users { get; set; }
-		public AuthApi AuthApi { get; set; }
-	}
-
-
-
-	public class SsoOptions
-	{
-		public string CookieName { get; set; }
-		public bool RequireHttpsMetadata { get; set; }
-		public string Authority { get; set; }
-		public string ClientId { get; set; }
-		public string ClientSecret { get; set; }
-	}
-
-
-
-	public class AppUsers
-		: IGuapUserProfile
-	{
-		public string NameIdentifier { get; set; }
-		public string DisplayedName { get; set; }
-		public int Right { get; set; }
-		public string Roles { get; set; }
-		public string Actions { get; set; }
-		public string Resources { get; set; }
-	}
-
-
-
-	public class AuthApi
-	{
-		public string Url { get; set; }
+		public string AppName { get; set; } // Required!
+		public string AppTitle { get; set; } // Required!
 	}
 
 }
